@@ -106,10 +106,12 @@ CREATE FUNCTION GetDMsBetweenUsers(@User1 INT, @User2 INT)
 RETURNS TABLE
 AS
 RETURN (
-    SELECT m.Message_id, m.Message_body, m.Timestamp, m.Media_path,
-           d.Suser_id, d.Ruser_id
+    SELECT m.Message_id, m.Message_body, m.Timestamp,
+           d.Suser_id, d.Ruser_id,
+           a.Attachement_type, a.Media_path
     FROM DM d
     JOIN Message m ON d.Message_id = m.Message_id
+    LEFT JOIN Attachment_type_Message a ON m.Message_id = a.Message_id
     WHERE (d.Suser_id = @User1 AND d.Ruser_id = @User2)
        OR (d.Suser_id = @User2 AND d.Ruser_id = @User1)
 );
