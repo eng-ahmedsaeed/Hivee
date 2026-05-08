@@ -21,9 +21,21 @@ namespace User
 
         }
 
+        private void CenterPanel(Panel panel)
+        {
+            panel.Left = (this.ClientSize.Width - panel.Width) / 2;
+            panel.Top = (this.ClientSize.Height - panel.Height) / 2;
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             panel2.Visible = false;
+
+            labelLoginError.Visible = false;
+            labelEmailError.Visible = false;
+            labelPasswordError.Visible = false;
+
+            CenterPanel(panel1);
+            CenterPanel(panel2);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -56,7 +68,7 @@ namespace User
 
         }
 
-        private void button1_Click(object sender, EventArgs e)//login
+        private void LoginBtn_Click(object sender, EventArgs e)//login
         {
             SqlConnection con = new SqlConnection(connectionString);
 
@@ -67,42 +79,48 @@ namespace User
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@Email", textBox1.Text);
-            cmd.Parameters.AddWithValue("@Password", textBox2.Text);
+            cmd.Parameters.AddWithValue("@Email", textBoxEmailLogin.Text);
+            cmd.Parameters.AddWithValue("@Password", textBoxPasswordLogin.Text);
 
             object result = cmd.ExecuteScalar();
+            labelLoginError.Visible = false;
 
             if (result != null)
             {
                 LoggedInUserId = Convert.ToInt32(result);
 
-                MessageBox.Show("Login Successful!");
+                labelLoginError.ForeColor = Color.Green;
+                labelLoginError.Text = "Login Successful!";
+                labelLoginError.Visible = true;
             }
             else
             {
-                MessageBox.Show("Invalid Email or Password");
+                labelLoginError.ForeColor = Color.Red;
+                labelLoginError.Text = "Invalid Email or Password";
+                labelLoginError.Visible = true;
             }
 
             con.Close();
         }
-        private void button2_Click(object sender, EventArgs e)//sign up
+        private void OpenSignupBtn_Click(object sender, EventArgs e)//sign up
         {
             panel1.Visible = false;
             panel2.Visible = true;
+            CenterPanel(panel2);
+            labelEmailError.Visible = false;
+            labelPasswordError.Visible = false;
 
         }
 
-        private void button3_Click(object sender, EventArgs e) //submit
+        private void SignupBtn_Click(object sender, EventArgs e) //submit
         {
-            if (textBox6.Text != textBox7.Text)
-            {
-                MessageBox.Show("Passwords do not match!");
-                return;
-            }
+            labelPasswordError.Visible = false;
 
-            if (textBox6.Text.Length < 6)
+            if (textBoxPasswordSignUp.Text != textBoxConfirmPassword.Text)
             {
-                MessageBox.Show("Password must be at least 6 characters/numbers.");
+                labelPasswordError.ForeColor = Color.Red;
+                labelPasswordError.Text = "Passwords do not match!";
+                labelPasswordError.Visible = true;
                 return;
             }
 
@@ -117,31 +135,37 @@ namespace User
                 SqlCommand cmd = new SqlCommand(query, con);
                 SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM [User] WHERE Email=@Email", con);
 
-                checkCmd.Parameters.AddWithValue("@Email", textBox5.Text);
+                checkCmd.Parameters.AddWithValue("@Email", textBoxEmailSignUp.Text);
 
                 int exists = (int)checkCmd.ExecuteScalar();
 
                 if (exists > 0)
                 {
-                    MessageBox.Show("Email already exists!");
+                    labelEmailError.ForeColor = Color.Red;
+                    labelEmailError.Text = "Email already exists!";
+                    labelEmailError.Visible = true;
                     return;
                 }
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@First_name", textBox3.Text);
-                cmd.Parameters.AddWithValue("@Last_name", textBox8.Text);
-                cmd.Parameters.AddWithValue("@Birth_date", DateTime.Parse(textBox4.Text));
-                cmd.Parameters.AddWithValue("@Email", textBox5.Text);
-                cmd.Parameters.AddWithValue("@Password", textBox6.Text);
+                cmd.Parameters.AddWithValue("@First_name", textBoxFirstName.Text);
+                cmd.Parameters.AddWithValue("@Last_name", textBoxLastName.Text);
+                cmd.Parameters.AddWithValue("@Birth_date", DateTime.Parse(textBoxDOB.Text));
+                cmd.Parameters.AddWithValue("@Email", textBoxEmailSignUp.Text);
+                cmd.Parameters.AddWithValue("@Password", textBoxPasswordSignUp.Text);
 
                 cmd.ExecuteNonQuery();
 
-                MessageBox.Show("Account Created Successfully!");
+                labelPasswordError.ForeColor = Color.Green;
+                labelPasswordError.Text = "Account Created Successfully!";
+                labelPasswordError.Visible = true;
 
                 con.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                labelPasswordError.ForeColor = Color.Red;
+                labelPasswordError.Text = ex.Message;
+                labelPasswordError.Visible = true;
             }
         }
 
@@ -195,17 +219,49 @@ namespace User
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void BackToLoginBtn_Click(object sender, EventArgs e)
         {
             panel2.Visible = false;
             panel1.Visible = true;
 
-            textBox3.Clear();
-            textBox4.Clear();
-            textBox5.Clear();
-            textBox6.Clear();
-            textBox7.Clear();
-            textBox8.Clear();
+            CenterPanel(panel1);
+
+            labelLoginError.Visible = false;
+            labelEmailError.Visible = false;
+            labelPasswordError.Visible = false;
+
+            textBoxFirstName.Clear();
+            textBoxDOB.Clear();
+            textBoxEmailSignUp.Clear();
+            textBoxPasswordSignUp.Clear();
+            textBoxConfirmPassword.Clear();
+            textBoxLastName.Clear();
+        }
+
+        private void User_Resize(object sender, EventArgs e)
+        {
+            CenterPanel(panel1);
+            CenterPanel(panel2);
+        }
+
+        private void label12_Click(object sender, EventArgs e)//Login Error Label
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)//Comfirm Pass Error
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e) //Email Existance
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -31,20 +31,24 @@
             panel1 = new Panel();
             button2 = new Button();
             button1 = new Button();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
+            textBoxPasswordLogin = new TextBox();
+            textBoxEmailLogin = new TextBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
+            labelLoginError = new Label();
             panel2 = new Panel();
+            labelEmailError = new Label();
+            labelPasswordError = new Label();
+            button4 = new Button();
             label11 = new Label();
-            textBox8 = new TextBox();
+            textBoxLastName = new TextBox();
             button3 = new Button();
-            textBox7 = new TextBox();
-            textBox6 = new TextBox();
-            textBox5 = new TextBox();
-            textBox4 = new TextBox();
-            textBox3 = new TextBox();
+            textBoxConfirmPassword = new TextBox();
+            textBoxPasswordSignUp = new TextBox();
+            textBoxEmailSignUp = new TextBox();
+            textBoxDOB = new TextBox();
+            textBoxFirstName = new TextBox();
             label10 = new Label();
             label9 = new Label();
             label8 = new Label();
@@ -52,20 +56,21 @@
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
-            button4 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.None;
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
-            panel1.Controls.Add(textBox2);
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(textBoxPasswordLogin);
+            panel1.Controls.Add(textBoxEmailLogin);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
+            panel1.Controls.Add(labelLoginError);
             panel1.Location = new Point(53, 13);
             panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
@@ -83,7 +88,7 @@
             button2.TabIndex = 6;
             button2.Text = "Sign Up";
             button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            button2.Click += OpenSignupBtn_Click;
             // 
             // button1
             // 
@@ -94,23 +99,23 @@
             button1.TabIndex = 5;
             button1.Text = "Login";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += LoginBtn_Click;
             // 
-            // textBox2
+            // textBoxPasswordLogin
             // 
-            textBox2.Location = new Point(211, 292);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(345, 34);
-            textBox2.TabIndex = 4;
-            textBox2.TextChanged += textBox2_TextChanged;
+            textBoxPasswordLogin.Location = new Point(211, 292);
+            textBoxPasswordLogin.Name = "textBoxPasswordLogin";
+            textBoxPasswordLogin.Size = new Size(345, 34);
+            textBoxPasswordLogin.TabIndex = 4;
+            textBoxPasswordLogin.TextChanged += textBox2_TextChanged;
             // 
-            // textBox1
+            // textBoxEmailLogin
             // 
-            textBox1.Location = new Point(211, 166);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(345, 34);
-            textBox1.TabIndex = 3;
-            textBox1.TextChanged += textBox1_TextChanged;
+            textBoxEmailLogin.Location = new Point(211, 166);
+            textBoxEmailLogin.Name = "textBoxEmailLogin";
+            textBoxEmailLogin.Size = new Size(345, 34);
+            textBoxEmailLogin.TabIndex = 3;
+            textBoxEmailLogin.TextChanged += textBox1_TextChanged;
             // 
             // label3
             // 
@@ -148,17 +153,30 @@
             label1.Text = "Login";
             label1.Click += label1_Click;
             // 
+            // labelLoginError
+            // 
+            labelLoginError.AutoSize = true;
+            labelLoginError.Location = new Point(292, 359);
+            labelLoginError.Name = "labelLoginError";
+            labelLoginError.Size = new Size(17, 28);
+            labelLoginError.TabIndex = 8;
+            labelLoginError.Text = " ";
+            labelLoginError.Click += label12_Click;
+            // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.None;
+            panel2.Controls.Add(labelEmailError);
+            panel2.Controls.Add(labelPasswordError);
             panel2.Controls.Add(button4);
             panel2.Controls.Add(label11);
-            panel2.Controls.Add(textBox8);
+            panel2.Controls.Add(textBoxLastName);
             panel2.Controls.Add(button3);
-            panel2.Controls.Add(textBox7);
-            panel2.Controls.Add(textBox6);
-            panel2.Controls.Add(textBox5);
-            panel2.Controls.Add(textBox4);
-            panel2.Controls.Add(textBox3);
+            panel2.Controls.Add(textBoxConfirmPassword);
+            panel2.Controls.Add(textBoxPasswordSignUp);
+            panel2.Controls.Add(textBoxEmailSignUp);
+            panel2.Controls.Add(textBoxDOB);
+            panel2.Controls.Add(textBoxFirstName);
             panel2.Controls.Add(label10);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
@@ -168,8 +186,44 @@
             panel2.Controls.Add(label4);
             panel2.Location = new Point(53, 13);
             panel2.Name = "panel2";
-            panel2.Size = new Size(822, 595);
+            panel2.Size = new Size(822, 596);
             panel2.TabIndex = 7;
+            panel2.Paint += panel2_Paint;
+            // 
+            // labelEmailError
+            // 
+            labelEmailError.AutoSize = true;
+            labelEmailError.BackColor = SystemColors.ButtonFace;
+            labelEmailError.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelEmailError.Location = new Point(387, 359);
+            labelEmailError.Name = "labelEmailError";
+            labelEmailError.Size = new Size(15, 23);
+            labelEmailError.TabIndex = 18;
+            labelEmailError.Text = " ";
+            labelEmailError.Click += label14_Click;
+            // 
+            // labelPasswordError
+            // 
+            labelPasswordError.AutoSize = true;
+            labelPasswordError.BackColor = SystemColors.ButtonFace;
+            labelPasswordError.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelPasswordError.Location = new Point(215, 500);
+            labelPasswordError.Name = "labelPasswordError";
+            labelPasswordError.Size = new Size(15, 23);
+            labelPasswordError.TabIndex = 17;
+            labelPasswordError.Text = " ";
+            labelPasswordError.Click += label13_Click;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.AliceBlue;
+            button4.Location = new Point(46, 526);
+            button4.Name = "button4";
+            button4.Size = new Size(254, 50);
+            button4.TabIndex = 16;
+            button4.Text = " I already have account ";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += BackToLoginBtn_Click;
             // 
             // label11
             // 
@@ -180,13 +234,13 @@
             label11.TabIndex = 15;
             label11.Text = "Date OF Birth";
             // 
-            // textBox8
+            // textBoxLastName
             // 
-            textBox8.Location = new Point(214, 174);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(458, 34);
-            textBox8.TabIndex = 14;
-            textBox8.TextChanged += textBox8_TextChanged;
+            textBoxLastName.Location = new Point(214, 174);
+            textBoxLastName.Name = "textBoxLastName";
+            textBoxLastName.Size = new Size(458, 34);
+            textBoxLastName.TabIndex = 14;
+            textBoxLastName.TextChanged += textBox8_TextChanged;
             // 
             // button3
             // 
@@ -197,47 +251,47 @@
             button3.TabIndex = 13;
             button3.Text = "Submit";
             button3.UseVisualStyleBackColor = false;
-            button3.Click += button3_Click;
+            button3.Click += SignupBtn_Click;
             // 
-            // textBox7
+            // textBoxConfirmPassword
             // 
-            textBox7.Location = new Point(211, 461);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(458, 34);
-            textBox7.TabIndex = 11;
-            textBox7.TextChanged += textBox7_TextChanged;
+            textBoxConfirmPassword.Location = new Point(214, 461);
+            textBoxConfirmPassword.Name = "textBoxConfirmPassword";
+            textBoxConfirmPassword.Size = new Size(458, 34);
+            textBoxConfirmPassword.TabIndex = 11;
+            textBoxConfirmPassword.TextChanged += textBox7_TextChanged;
             // 
-            // textBox6
+            // textBoxPasswordSignUp
             // 
-            textBox6.Location = new Point(211, 393);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(458, 34);
-            textBox6.TabIndex = 10;
-            textBox6.TextChanged += textBox6_TextChanged;
+            textBoxPasswordSignUp.Location = new Point(211, 393);
+            textBoxPasswordSignUp.Name = "textBoxPasswordSignUp";
+            textBoxPasswordSignUp.Size = new Size(458, 34);
+            textBoxPasswordSignUp.TabIndex = 10;
+            textBoxPasswordSignUp.TextChanged += textBox6_TextChanged;
             // 
-            // textBox5
+            // textBoxEmailSignUp
             // 
-            textBox5.Location = new Point(211, 319);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(458, 34);
-            textBox5.TabIndex = 9;
-            textBox5.TextChanged += textBox5_TextChanged;
+            textBoxEmailSignUp.Location = new Point(211, 319);
+            textBoxEmailSignUp.Name = "textBoxEmailSignUp";
+            textBoxEmailSignUp.Size = new Size(458, 34);
+            textBoxEmailSignUp.TabIndex = 9;
+            textBoxEmailSignUp.TextChanged += textBox5_TextChanged;
             // 
-            // textBox4
+            // textBoxDOB
             // 
-            textBox4.Location = new Point(211, 251);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(458, 34);
-            textBox4.TabIndex = 8;
-            textBox4.TextChanged += textBox4_TextChanged;
+            textBoxDOB.Location = new Point(211, 251);
+            textBoxDOB.Name = "textBoxDOB";
+            textBoxDOB.Size = new Size(458, 34);
+            textBoxDOB.TabIndex = 8;
+            textBoxDOB.TextChanged += textBox4_TextChanged;
             // 
-            // textBox3
+            // textBoxFirstName
             // 
-            textBox3.Location = new Point(211, 106);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(458, 34);
-            textBox3.TabIndex = 7;
-            textBox3.TextChanged += textBox3_TextChanged;
+            textBoxFirstName.Location = new Point(211, 106);
+            textBoxFirstName.Name = "textBoxFirstName";
+            textBoxFirstName.Size = new Size(458, 34);
+            textBoxFirstName.TabIndex = 7;
+            textBoxFirstName.TextChanged += textBox3_TextChanged;
             // 
             // label10
             // 
@@ -260,7 +314,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(171, 356);
+            label8.Location = new Point(174, 362);
             label8.Name = "label8";
             label8.Size = new Size(93, 28);
             label8.TabIndex = 4;
@@ -307,18 +361,7 @@
             label4.Text = "Sign UP";
             label4.Click += label4_Click;
             // 
-            // button4
-            // 
-            button4.BackColor = Color.AliceBlue;
-            button4.Location = new Point(46, 526);
-            button4.Name = "button4";
-            button4.Size = new Size(254, 50);
-            button4.TabIndex = 16;
-            button4.Text = " I already have account ";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
-            // 
-            // Form1
+            // User
             // 
             AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -328,9 +371,10 @@
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
-            Name = "Form1";
+            Name = "User";
             Text = "Form1";
             Load += Form1_Load;
+            Resize += User_Resize;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -342,19 +386,19 @@
 
         private Panel panel1;
         private Label label1;
-        private TextBox textBox2;
-        private TextBox textBox1;
+        private TextBox textBoxPasswordLogin;
+        private TextBox textBoxEmailLogin;
         private Label label3;
         private Label label2;
         private Button button1;
         private Button button2;
         private Panel panel2;
         private Label label4;
-        private TextBox textBox7;
-        private TextBox textBox6;
-        private TextBox textBox5;
-        private TextBox textBox4;
-        private TextBox textBox3;
+        private TextBox textBoxConfirmPassword;
+        private TextBox textBoxPasswordSignUp;
+        private TextBox textBoxEmailSignUp;
+        private TextBox textBoxDOB;
+        private TextBox textBoxFirstName;
         private Label label10;
         private Label label9;
         private Label label8;
@@ -362,8 +406,11 @@
         private Label label6;
         private Label label5;
         private Button button3;
-        private TextBox textBox8;
+        private TextBox textBoxLastName;
         private Label label11;
         private Button button4;
+        private Label labelLoginError;
+        private Label labelPasswordError;
+        private Label labelEmailError;
     }
 }
