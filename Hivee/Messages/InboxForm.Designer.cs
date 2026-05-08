@@ -46,7 +46,7 @@
             lstContacts.FormattingEnabled = true;
             lstContacts.Location = new Point(0, 0);
             lstContacts.Name = "lstContacts";
-            lstContacts.Size = new Size(200, 450);
+            lstContacts.Size = new Size(200, 475);
             lstContacts.TabIndex = 0;
             lstContacts.SelectedIndexChanged += lstContacts_SelectedIndexChanged;
             // 
@@ -56,14 +56,16 @@
             txtReply.Location = new Point(3, 29);
             txtReply.Multiline = true;
             txtReply.Name = "txtReply";
-            txtReply.Size = new Size(388, 53);
+            txtReply.Size = new Size(422, 53);
             txtReply.TabIndex = 2;
             // 
             // btnSendReply
             // 
-            btnSendReply.Location = new Point(497, 29);
+            btnSendReply.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            btnSendReply.AutoSize = true;
+            btnSendReply.Location = new Point(531, 35);
             btnSendReply.Name = "btnSendReply";
-            btnSendReply.Size = new Size(94, 48);
+            btnSendReply.Size = new Size(101, 41);
             btnSendReply.TabIndex = 3;
             btnSendReply.Text = "Send";
             btnSendReply.UseVisualStyleBackColor = true;
@@ -71,9 +73,11 @@
             // 
             // btnAttach
             // 
-            btnAttach.Location = new Point(397, 29);
+            btnAttach.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            btnAttach.AutoSize = true;
+            btnAttach.Location = new Point(431, 35);
             btnAttach.Name = "btnAttach";
-            btnAttach.Size = new Size(94, 48);
+            btnAttach.Size = new Size(94, 41);
             btnAttach.TabIndex = 4;
             btnAttach.Text = "Attach";
             btnAttach.UseVisualStyleBackColor = true;
@@ -89,22 +93,23 @@
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67.50842F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15.8249159F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
             tableLayoutPanel1.Controls.Add(txtReply, 0, 1);
             tableLayoutPanel1.Controls.Add(btnAttach, 1, 1);
             tableLayoutPanel1.Controls.Add(btnSendReply, 2, 1);
             tableLayoutPanel1.Controls.Add(lblAttachment, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Bottom;
-            tableLayoutPanel1.Location = new Point(3, 364);
+            tableLayoutPanel1.Location = new Point(3, 387);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 59F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(594, 83);
+            tableLayoutPanel1.Size = new Size(635, 85);
             tableLayoutPanel1.TabIndex = 6;
             // 
             // tableLayoutPanel2
@@ -119,7 +124,7 @@
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 80.22222F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 19.7777786F));
-            tableLayoutPanel2.Size = new Size(600, 450);
+            tableLayoutPanel2.Size = new Size(641, 475);
             tableLayoutPanel2.TabIndex = 7;
             // 
             // flpChatHistory
@@ -129,7 +134,7 @@
             flpChatHistory.FlowDirection = FlowDirection.TopDown;
             flpChatHistory.Location = new Point(3, 3);
             flpChatHistory.Name = "flpChatHistory";
-            flpChatHistory.Size = new Size(594, 355);
+            flpChatHistory.Size = new Size(635, 375);
             flpChatHistory.TabIndex = 7;
             flpChatHistory.WrapContents = false;
             // 
@@ -137,7 +142,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(841, 475);
             Controls.Add(tableLayoutPanel2);
             Controls.Add(lstContacts);
             Name = "InboxForm";
@@ -146,6 +151,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             ResumeLayout(false);
         }
 
