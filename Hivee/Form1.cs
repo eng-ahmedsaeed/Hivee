@@ -1,6 +1,8 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace Hivee
 
 {
@@ -11,12 +13,14 @@ namespace Hivee
         string firstName = "";
         string lastName = "";
         string PfPPath = "";
-
+        string uploadedMedia = "";
+       
         public Form1(int UserId)
         {
             InitializeComponent();
             userId = UserId;
             GetuserData();
+           
 
         }
 
@@ -25,13 +29,28 @@ namespace Hivee
             //Getting User Reuired data
 
 
+
+            LoadPosts();
+
+
+
+        }
+
+
+        private void LoadPosts()
+        {
+
             Random rnd = new Random();
             DataTable allPosts = FetchuserPosts().Clone();
-            //allPosts.Merge(FetchPostsFromFollower());
-            //allPosts.Merge(FetchPostsFromPage());
+            allPosts.Merge(FetchPostsFromFollower());
+            allPosts.Merge(FetchPostsFromPage());
             allPosts.Merge(FetchuserPosts());
             var shuffledRows = allPosts.AsEnumerable().OrderBy(r => rnd.Next()).ToList();
-
+            DataTable Pages = GetUserPages();
+            PagesComboBox.DataSource = Pages;
+            PagesComboBox.DisplayMember = "Page_name";
+            PagesComboBox.ValueMember = "Page_id";
+            PagesComboBox.SelectedIndex = -1;
             foreach (var post in shuffledRows)
             {
                 int currentY = 20;
@@ -228,8 +247,8 @@ namespace Hivee
                 RichTextBox AddCommentText = new RichTextBox();
 
                 AddCommentText.Name = "richTextBox2";
-
-
+                //7ot 2el id hena we 7ot 2el Text box kolo fe 2el button
+                AddCommentText.Tag = postid;
                 AddCommentText.Size = new Size(1023, 69);
 
                 AddCommentText.Location = new Point(71, currentY + 45);
@@ -277,10 +296,12 @@ namespace Hivee
                     wrapper.Controls.Add(UserPFP);
 
                 }
-                ////Creating AddComment Button
+                ////Creating Show comments Button
                 Button ShowComments = new Button();
 
                 ShowComments.Name = "AddCommentButton";
+                ShowComments.Click+= ViewComments;
+                ShowComments.Tag = postid;
 
                 ShowComments.Text = "Show Comments";
 
@@ -307,8 +328,11 @@ namespace Hivee
                 ShowComments.CausesValidation = true;
                 ////Creating AddComment Button
                 Button AddCommentButton = new Button();
+               
 
                 AddCommentButton.Name = "AddCommentButton";
+                AddCommentButton.Tag = AddCommentText;
+                AddCommentButton.Click += SubmitComment;
 
                 AddCommentButton.Text = "Add Comment";
 
@@ -348,9 +372,7 @@ namespace Hivee
                 Scroll.Controls.Add(wrapper);
 
             }
-
         }
-
 
 
         private DataTable FetchPostsFromFollower()
@@ -615,92 +637,365 @@ namespace Hivee
 
         }
 
-        private void CreatePost(string userID)
+        private void CreatePost(
+               string textContent,
+               string mediaPath,
+               int? pageId)
         {
-            //SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
-            //con.Open();
-            //try
-            //{
+            SqlConnection con =
+                new SqlConnection(
+                "Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
 
-            //    SqlCommand cmd = new SqlCommand("Select * From AddPost(    @User_ID , @Page_id INT  ,@Text_Content , @Media_path ) ", con);
-            //    SqlParameter idparam = cmd.Parameters.Add(new SqlParameter("@ID", posts));
-            //    return (int)cmd.ExecuteScalar();
-            //}
-            //catch (Exception Ex)
-            //{
-            //    MessageBox.Show(Ex.Message);
-            //    return -1;
-            //}
-            //finally
-            //{
-            //    con.Close();
-            //}
+            try
+            {
+                con.Open();
 
+                SqlCommand cmd =
+                    new SqlCommand("AddPost", con);
 
+                cmd.CommandType =
+                    CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue(
+                    "@User_ID",
+                    userId);
+
+                if (pageId == null)
+                {
+                    cmd.Parameters.AddWithValue(
+                        "@Page_id",
+                        DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue(
+                        "@Page_id",
+                        pageId);
+                }
+
+                cmd.Parameters.AddWithValue(
+                    "@Text_Content",
+                    textContent);
+
+                if (string.IsNullOrEmpty(mediaPath))
+                {
+                    cmd.Parameters.AddWithValue(
+                        "@Media_path",
+                        DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue(
+                        "@Media_path",
+                        mediaPath);
+                }
+
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Post Created");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                //hashtof 2el donya warya 
+                CreatePostText.Clear();
+                PagesComboBox.SelectedIndex = -1;
+                Preivew.Image = null;
+                CreatePostText.Text = "";
+
+                con.Close();
+            }
         }
+
+
+
+
+        private DataTable GetUserPages()
+        {
+            SqlConnection con = new SqlConnection(
+                "Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+
+            DataTable table = new DataTable();
+
+            try
+            {
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand(
+                @"SELECT p.Page_id, p.Page_name
+          FROM Page p
+          INNER JOIN Join_Page jp
+          ON p.Page_id = jp.Page_id
+          WHERE jp.User_id = @ID", con);
+
+                cmd.Parameters.AddWithValue("@ID", userId);
+
+                SqlDataAdapter da =
+                    new SqlDataAdapter(cmd);
+
+                da.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return table;
+        }
+
+
+
+
+        private DataTable GetPostsComment(string postId)
+        {
+            SqlConnection con = new SqlConnection(
+                "Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+
+            SqlDataReader reader = null;
+
+            DataTable comments = new DataTable();
+
+            try
+            {
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT * FROM GetCommentsByPost(@Post_id)", con);
+
+                cmd.Parameters.AddWithValue("@Post_id", postId);
+
+                reader = cmd.ExecuteReader();
+
+                comments.Columns.Add("Comment_seq");
+                comments.Columns.Add("Text_content");
+                comments.Columns.Add("Creation_timestamp");
+                comments.Columns.Add("First_name");
+                comments.Columns.Add("Last_name");
+
+                DataRow row;
+
+                while (reader.Read())
+                {
+                    row = comments.NewRow();
+
+                    row["Comment_seq"] =
+                        reader["Comment_seq"];
+
+                    row["Text_content"] =
+                        reader["Text_content"];
+
+                    row["Creation_timestamp"] =
+                        reader["Creation_timestamp"];
+
+                    row["First_name"] =
+                        reader["First_name"];
+
+                    row["Last_name"] =
+                        reader["Last_name"];
+
+                    comments.Rows.Add(row);
+                }
+
+                return comments;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+                return comments;
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+
+                con.Close();
+            }
+        }
+
+
+       private void CreateComment(String PostId,String text)
+        {
+
+            SqlConnection con = new SqlConnection("Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+            SqlCommand cmd = new SqlCommand("AddComment", con);
+            try
+            {
+                con.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Post_id", PostId);
+                cmd.Parameters.AddWithValue("@user_id", userId);
+                cmd.Parameters.AddWithValue("@Text_content", text);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Ur comment is added successfully ");
+            }
+            catch(Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            finally
+            {
+
+                con.Close();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private void CreatePostButton_Click(object sender, EventArgs e)
+
         {
+            string postText =
+       CreatePostText.Text;
+
+            int? pageId = null;
+
+            if (PagesComboBox.SelectedIndex != -1)
+            {
+                pageId =
+                Convert.ToInt32(
+                PagesComboBox.SelectedValue);
+            }
+
+            CreatePost(
+                postText,
+                uploadedMedia,
+                pageId
+            );
 
         }
 
 
-        //private void GetPostsComment()
-        // {
-        //     SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
-        //     SqlDataReader reader = null;
-        //     DataTable PostComment = new DataTable();
-
-        //     try
-        //     {
-        //         con.Open();
-        //         SqlCommand cmd = new SqlCommand("SELECT * FROM GetCommentsByPost(@User_id)", con);
-
-        //         SqlParameter UserId = cmd.Parameters.Add(new("@User_id", userId));
-        //         UserId.Direction = ParameterDirection.Input;
-        //         reader = cmd.ExecuteReader();
-
-        //         DataRow row;
-        //         while (reader.Read())
-        //         {
-        //             row = PostComment.NewRow();
-        //             row["Post_id"] = reader["Post_id"];
-        //             row["text_content"] = reader["text_content"];
-        //             row["Publish_TimeStamp"] = reader["Publish_TimeStamp"];
-        //             row["Media_Path"] = reader["Media_Path"];
-        //             row["First_name"] = firstName;
-        //             row["Last_name"] = lastName;
-        //             UserPosts.Rows.Add(row);
-
-        //         }
-        //         return UserPosts;
-        //     }
 
 
-        //     catch (Exception Ex)
+        //dah 2el dilog box beya5od jpg
+        private void AddMeida_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
 
-        //     {
+            dialog.Filter =
+                "Image Files|*.jpg;*.png;*.jpeg";
 
-        //         MessageBox.Show(Ex.Message);
-        //         return UserPosts;
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                //ha5od bas 2el file name
+                string fileName =
+                    Path.GetFileName(dialog.FileName);
+                //haro7 a7oto fe 2el bin folder
+                string imagesFolder =
+                    Path.Combine(
+                        Application.StartupPath,
+                        "Images");
+                //law mesh ma3mol 2e3mlo 
+                Directory.CreateDirectory(imagesFolder);
+                //hena 3amlt 2el path be 2el folder location 2ely 2e5tartoo
+                string destinationPath =
+                    Path.Combine(
+                        imagesFolder,
+                        fileName);
+                //3amlt copy le 2el photo we 2el true te3mel overwrite
+                File.Copy(
+                    dialog.FileName,
+                    destinationPath,
+                    true);
 
-        //     }
-        //     finally
-        //     {
-        //         if (con != null)
-        //         {
+                uploadedMedia =
+                    destinationPath;
 
-        //             con.Close();
-        //         }
-        //         if (reader != null)
-        //         {
+                Preivew.Image =
+                    Image.FromFile(uploadedMedia);
 
-        //             reader.Close();
-        //         }
-        //     }
-        // }
+                Preivew.SizeMode =
+                    PictureBoxSizeMode.StretchImage;
+            }
+        }
 
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            Scroll.Controls.Clear();
 
+            LoadPosts();
+        }
+
+        private void ViewComments(
+    object sender,
+    EventArgs e)
+        
+            {
+                Button btn = (Button)sender;
+
+                string postId =
+                    btn.Tag.ToString();
+
+                DataTable comments =
+                    GetPostsComment(postId);
+
+                CommentsForm form =
+                    new CommentsForm(comments);
+
+                form.Show();
+            }
+   //Form tanya 3lshan 2azher feha 2el Comments
+        public partial class CommentsForm : Form
+        {
+            public CommentsForm(DataTable comments)
+            {
+                
+                ListBox ListBox1 = new ListBox();
+
+                ListBox1.Size =
+                    new Size(500, 400);
+
+                Controls.Add(ListBox1);
+                foreach (DataRow row in comments.Rows)
+                {
+                    ListBox1.Items.Add(
+                        row["First_name"].ToString()
+                        + " : " +
+                        row["Text_content"].ToString());
+                }
+            }
+        }
+
+        private void SubmitComment(
+object sender,
+EventArgs e)
+        {
+            Button b = (Button)sender;
+            string postId =
+                   ((RichTextBox)b.Tag).Tag.ToString();
+            string Text = ((RichTextBox)b.Tag).Text;
+            CreateComment(postId, Text);
+            ((RichTextBox)b.Tag).Text = "";
+
+            
+            
+
+        }
 
     }
 }
