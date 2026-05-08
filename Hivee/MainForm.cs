@@ -52,7 +52,13 @@ namespace Hivee
 
         private void btnEvent_Click(object sender, EventArgs e)
         {
+            LoadFormIntoPanel(new Event(currentUserId));
+        }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            Application.Exit();
         }
     }
 }

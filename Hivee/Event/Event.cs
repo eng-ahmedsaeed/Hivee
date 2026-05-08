@@ -10,16 +10,17 @@ namespace Hivee
 
         private string connectionString = "Server=.;Database=SocialMedia;Trusted_Connection=True;TrustServerCertificate=True;";
 
-        private int currentLoggedInUserId = 1;
+        private int currentLoggedInUserId;
         private int selectedEventId = -1;
 
 
         private string oldStreet = "";
         private string oldZip = "";
 
-        public Event()
+        public Event(int userId)
         {
             InitializeComponent();
+            currentLoggedInUserId = userId;
             this.Load += EventForm_Load;
             this.btnCreate.Click += btnCreate_Click;
             this.btnUpdate.Click += BtnUpdate_Click;

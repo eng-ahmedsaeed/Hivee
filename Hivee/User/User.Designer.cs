@@ -107,7 +107,6 @@
             textBoxPasswordLogin.Name = "textBoxPasswordLogin";
             textBoxPasswordLogin.Size = new Size(345, 34);
             textBoxPasswordLogin.TabIndex = 4;
-            textBoxPasswordLogin.TextChanged += textBox2_TextChanged;
             // 
             // textBoxEmailLogin
             // 
@@ -115,7 +114,6 @@
             textBoxEmailLogin.Name = "textBoxEmailLogin";
             textBoxEmailLogin.Size = new Size(345, 34);
             textBoxEmailLogin.TabIndex = 3;
-            textBoxEmailLogin.TextChanged += textBox1_TextChanged;
             // 
             // label3
             // 
@@ -127,7 +125,6 @@
             label3.Size = new Size(93, 28);
             label3.TabIndex = 2;
             label3.Text = "Password";
-            label3.Click += label3_Click;
             // 
             // label2
             // 
@@ -139,7 +136,6 @@
             label2.Size = new Size(59, 28);
             label2.TabIndex = 1;
             label2.Text = "Email";
-            label2.Click += label2_Click;
             // 
             // label1
             // 
@@ -151,7 +147,6 @@
             label1.Size = new Size(143, 51);
             label1.TabIndex = 0;
             label1.Text = "Login";
-            label1.Click += label1_Click;
             // 
             // labelLoginError
             // 
@@ -161,7 +156,6 @@
             labelLoginError.Size = new Size(17, 28);
             labelLoginError.TabIndex = 8;
             labelLoginError.Text = " ";
-            labelLoginError.Click += label12_Click;
             // 
             // panel2
             // 
@@ -188,7 +182,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(822, 596);
             panel2.TabIndex = 7;
-            panel2.Paint += panel2_Paint;
             // 
             // labelEmailError
             // 
@@ -200,7 +193,6 @@
             labelEmailError.Size = new Size(15, 23);
             labelEmailError.TabIndex = 18;
             labelEmailError.Text = " ";
-            labelEmailError.Click += label14_Click;
             // 
             // labelPasswordError
             // 
@@ -212,7 +204,6 @@
             labelPasswordError.Size = new Size(15, 23);
             labelPasswordError.TabIndex = 17;
             labelPasswordError.Text = " ";
-            labelPasswordError.Click += label13_Click;
             // 
             // button4
             // 
@@ -240,7 +231,6 @@
             textBoxLastName.Name = "textBoxLastName";
             textBoxLastName.Size = new Size(458, 34);
             textBoxLastName.TabIndex = 14;
-            textBoxLastName.TextChanged += textBox8_TextChanged;
             // 
             // button3
             // 
@@ -259,7 +249,6 @@
             textBoxConfirmPassword.Name = "textBoxConfirmPassword";
             textBoxConfirmPassword.Size = new Size(458, 34);
             textBoxConfirmPassword.TabIndex = 11;
-            textBoxConfirmPassword.TextChanged += textBox7_TextChanged;
             // 
             // textBoxPasswordSignUp
             // 
@@ -267,7 +256,6 @@
             textBoxPasswordSignUp.Name = "textBoxPasswordSignUp";
             textBoxPasswordSignUp.Size = new Size(458, 34);
             textBoxPasswordSignUp.TabIndex = 10;
-            textBoxPasswordSignUp.TextChanged += textBox6_TextChanged;
             // 
             // textBoxEmailSignUp
             // 
@@ -275,7 +263,6 @@
             textBoxEmailSignUp.Name = "textBoxEmailSignUp";
             textBoxEmailSignUp.Size = new Size(458, 34);
             textBoxEmailSignUp.TabIndex = 9;
-            textBoxEmailSignUp.TextChanged += textBox5_TextChanged;
             // 
             // textBoxDOB
             // 
@@ -283,7 +270,6 @@
             textBoxDOB.Name = "textBoxDOB";
             textBoxDOB.Size = new Size(458, 34);
             textBoxDOB.TabIndex = 8;
-            textBoxDOB.TextChanged += textBox4_TextChanged;
             // 
             // textBoxFirstName
             // 
@@ -291,7 +277,6 @@
             textBoxFirstName.Name = "textBoxFirstName";
             textBoxFirstName.Size = new Size(458, 34);
             textBoxFirstName.TabIndex = 7;
-            textBoxFirstName.TextChanged += textBox3_TextChanged;
             // 
             // label10
             // 
@@ -309,7 +294,6 @@
             label9.Size = new Size(168, 28);
             label9.TabIndex = 5;
             label9.Text = "Confirm Password";
-            label9.Click += label9_Click;
             // 
             // label8
             // 
@@ -319,7 +303,6 @@
             label8.Size = new Size(93, 28);
             label8.TabIndex = 4;
             label8.Text = "Password";
-            label8.Click += label8_Click;
             // 
             // label7
             // 
@@ -338,7 +321,6 @@
             label6.Size = new Size(103, 28);
             label6.TabIndex = 2;
             label6.Text = "Last Name";
-            label6.Click += label6_Click;
             // 
             // label5
             // 
@@ -348,7 +330,6 @@
             label5.Size = new Size(106, 28);
             label5.TabIndex = 1;
             label5.Text = "First Name";
-            label5.Click += label5_Click;
             // 
             // label4
             // 
@@ -359,7 +340,6 @@
             label4.Size = new Size(191, 51);
             label4.TabIndex = 0;
             label4.Text = "Sign UP";
-            label4.Click += label4_Click;
             // 
             // User
             // 

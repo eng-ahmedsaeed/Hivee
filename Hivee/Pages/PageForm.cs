@@ -388,10 +388,5 @@ namespace Hivee.Pages
             LoadPages();
             
         }
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            Application.Exit();
-        }
     }
 }
