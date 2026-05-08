@@ -99,7 +99,7 @@ GO
 
 --  DELETE Stored Procedures
 
--- Delete a page  (Join_Page rows deleted first – no CASCADE in original DDL)
+-- Delete a page 
 CREATE PROCEDURE DeletePage
     @Page_id INT
 AS
