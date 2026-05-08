@@ -9,6 +9,7 @@ namespace Hivee
         {
             InitializeComponent();
             currentUserId = loggedInUserId;
+            LoadFormIntoPanel(new Form1(currentUserId));
         }
 
         private void LoadFormIntoPanel(Form childForm)
@@ -47,7 +48,7 @@ namespace Hivee
 
         private void btnPost_Click(object sender, EventArgs e)
         {
-
+            LoadFormIntoPanel(new Form1(currentUserId));
         }
 
         private void btnEvent_Click(object sender, EventArgs e)

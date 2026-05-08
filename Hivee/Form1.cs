@@ -377,7 +377,7 @@ namespace Hivee
 
         private DataTable FetchPostsFromFollower()
         {
-            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
+            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=SocialMedia;Integrated Security = SSPI");
             con.Open();
             SqlDataReader reader = null;
             DataTable PostsFromFollowing = new DataTable();
@@ -446,7 +446,7 @@ namespace Hivee
 
         private DataTable FetchPostsFromPage()
         {
-            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
+            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=SocialMedia;Integrated Security = SSPI");
             con.Open();
             SqlDataReader reader = null;
             DataTable PostsFromPages = new DataTable();
@@ -507,7 +507,7 @@ namespace Hivee
 
         private DataTable FetchuserPosts()
         {
-            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
+            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=SocialMedia;Integrated Security = SSPI");
             SqlDataReader reader = null;
             DataTable UserPosts = new DataTable();
 
@@ -570,7 +570,7 @@ namespace Hivee
 
         private void GetuserData()
         {
-            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
+            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=SocialMedia;Integrated Security = SSPI");
             SqlDataReader reader = null;
             SqlCommand userCmd = new SqlCommand("SELECT First_name, Last_name,Avatar_url FROM [User] WHERE User_id = @User_id", con);
             SqlParameter user = userCmd.Parameters.Add(new("@User_id", userId));
@@ -616,7 +616,7 @@ namespace Hivee
 
         private int GetCommentCount(String posts)
         {
-            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=Social Media;Integrated Security = SSPI");
+            SqlConnection con = new SqlConnection("Data Source = (local);Initial Catalog=SocialMedia;Integrated Security = SSPI");
             con.Open();
             try
             {
@@ -644,7 +644,7 @@ namespace Hivee
         {
             SqlConnection con =
                 new SqlConnection(
-                "Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+                "Data Source=(local);Initial Catalog=SocialMedia;Integrated Security=SSPI");
 
             try
             {
@@ -716,7 +716,7 @@ namespace Hivee
         private DataTable GetUserPages()
         {
             SqlConnection con = new SqlConnection(
-                "Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+                "Data Source=(local);Initial Catalog=SocialMedia;Integrated Security=SSPI");
 
             DataTable table = new DataTable();
 
@@ -756,7 +756,7 @@ namespace Hivee
         private DataTable GetPostsComment(string postId)
         {
             SqlConnection con = new SqlConnection(
-                "Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+                "Data Source=(local);Initial Catalog=SocialMedia;Integrated Security=SSPI");
 
             SqlDataReader reader = null;
 
@@ -826,7 +826,7 @@ namespace Hivee
        private void CreateComment(String PostId,String text)
         {
 
-            SqlConnection con = new SqlConnection("Data Source=(local);Initial Catalog=Social Media;Integrated Security=SSPI");
+            SqlConnection con = new SqlConnection("Data Source=(local);Initial Catalog=SocialMedia;Integrated Security=SSPI");
             SqlCommand cmd = new SqlCommand("AddComment", con);
             try
             {
