@@ -145,10 +145,23 @@ GO
 -- INSERT Stored Procedures
 -- =====================
 
+--Login
+CREATE PROCEDURE LoginUser
+    @Email VARCHAR(255),
+    @Password VARCHAR(255)
+AS
+BEGIN
+    SELECT *
+    FROM [User]
+    WHERE Email = @Email
+    AND Password = @Password
+END;
+GO
+
 -- Add new user
 CREATE PROCEDURE AddUser
-    @Bio VARCHAR(500), @Private BIT, @Birth_date DATE,
-    @Email VARCHAR(255), @Avatar_url VARCHAR(500),
+    @Bio VARCHAR(500)='', @Private BIT, @Birth_date DATE,
+    @Email VARCHAR(255), @Avatar_url VARCHAR(500)='',
     @First_name VARCHAR(100), @Last_name VARCHAR(100), @Password VARCHAR(255)
 AS
 BEGIN
