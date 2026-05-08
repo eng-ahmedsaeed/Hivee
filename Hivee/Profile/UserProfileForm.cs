@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Hivee
+namespace Hivee.Profile
 {
     public class UserProfileForm : Form
     {

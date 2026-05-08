@@ -8,13 +8,13 @@
     <Compile Update="PostEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UserProfileForm.cs">
+    <Compile Update="Profile\UserProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UserSearchForm.cs">
+    <Compile Update="Profile\UserSearchForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UserSettingsForm.cs">
+    <Compile Update="Profile\UserSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

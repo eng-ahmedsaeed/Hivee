@@ -38,7 +38,7 @@ namespace Hivee
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-
+            LoadFormIntoPanel(new Form2(currentUserId));
         }
 
         private void btnPage_Click(object sender, EventArgs e)
