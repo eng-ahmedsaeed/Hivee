@@ -209,15 +209,23 @@ GO
 -- Send DM
 CREATE PROCEDURE SendDM
     @Suser_id INT, @Ruser_id INT,
-    @Message_body TEXT, @Media_path VARCHAR(500) = NULL
+    @Message_body TEXT,
+    @Media_path VARCHAR(500) = NULL,
+    @Attachment_type VARCHAR(100) = 'Image'
 AS
 BEGIN
     DECLARE @Message_id INT = (SELECT ISNULL(MAX(Message_id), 0) + 1 FROM Message)
-    INSERT INTO Message (Message_id, Message_body, Timestamp, Media_path)
-    VALUES (@Message_id, @Message_body, GETDATE(), @Media_path)
+    INSERT INTO Message (Message_id, Message_body, Timestamp)
+    VALUES (@Message_id, @Message_body, GETDATE())
 
     INSERT INTO DM (Suser_id, Ruser_id, Message_id)
     VALUES (@Suser_id, @Ruser_id, @Message_id)
+
+    IF @Media_path IS NOT NULL
+    BEGIN
+        INSERT INTO Attachment_type_Message (Message_id, Attachement_type, Media_path)
+        VALUES (@Message_id, @Attachment_type, @Media_path)
+    END
 END;
 GO
 
