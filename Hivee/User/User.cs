@@ -1,3 +1,4 @@
+using Hivee;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,9 +90,11 @@ namespace User
             {
                 LoggedInUserId = Convert.ToInt32(result);
 
-                labelLoginError.ForeColor = Color.Green;
-                labelLoginError.Text = "Login Successful!";
-                labelLoginError.Visible = true;
+                Form1 form = new Form1();
+                form.Show();
+
+                this.Hide();
+
             }
             else
             {
