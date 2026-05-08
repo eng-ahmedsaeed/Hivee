@@ -1,17 +1,13 @@
-using Microsoft.Data.SqlClient;
-using System;
 using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
+using System.Data.SqlClient;
 
-namespace Hivee
+namespace Hivee.Pages
 {
     public partial class PageForm : Form
     {
         private string connectionString = "Server=.;Database=SocialMedia;Trusted_Connection=True;TrustServerCertificate=True;";
 
-        // Defaulting to User 1 (Ahmed) for testing. 
-        private int currentLoggedInUserId = 1;
+        private int currentLoggedInUserId;
 
         private int selectedPageId = -1;
         private bool selectedIsAdmin = false;
@@ -20,9 +16,10 @@ namespace Hivee
         private int selectedMemberUserId = -1;
         private string selectedMemberRole = "";
 
-        public PageForm()
+        public PageForm(int userId)
         {
             InitializeComponent();
+            currentLoggedInUserId = userId;
 
             // Form Load
             this.Load += PageForm_Load;
@@ -37,7 +34,6 @@ namespace Hivee
             btnSearch.Click += BtnSearch_Click;
             btnShowAll.Click += BtnShowAll_Click;
             btnMyPages.Click += BtnMyPages_Click;
-            btnBack.Click += BtnBack_Click;
 
             // Panel 2 Wiring (Members)
             dgvMembers.CellClick += DgvMembers_CellClick;

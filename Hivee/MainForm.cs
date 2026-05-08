@@ -37,7 +37,22 @@ namespace Hivee
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void btnPage_Click(object sender, EventArgs e)
+        {
+            LoadFormIntoPanel(new Pages.PageForm(currentUserId));
+        }
+
+        private void btnPost_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEvent_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

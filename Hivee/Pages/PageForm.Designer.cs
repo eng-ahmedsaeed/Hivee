@@ -1,4 +1,4 @@
-namespace Hivee
+namespace Hivee.Pages
 {
     partial class PageForm
     {
@@ -18,7 +18,6 @@ namespace Hivee
         private void InitializeComponent()
         {
             panelPages = new Panel();
-            btnBack = new Button();
             lblSearchTitle = new Label();
             lblManageTitle = new Label();
             divider = new Panel();
@@ -54,7 +53,6 @@ namespace Hivee
             // panelPages
             // 
             panelPages.BackColor = Color.WhiteSmoke;
-            panelPages.Controls.Add(btnBack);
             panelPages.Controls.Add(lblSearchTitle);
             panelPages.Controls.Add(lblManageTitle);
             panelPages.Controls.Add(divider);
@@ -77,15 +75,6 @@ namespace Hivee
             panelPages.Name = "panelPages";
             panelPages.Size = new Size(1000, 600);
             panelPages.TabIndex = 0;
-            // 
-            // btnBack
-            // 
-            btnBack.Location = new Point(30, 560);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(120, 30);
-            btnBack.TabIndex = 0;
-            btnBack.Text = "⬅ Main Menu";
-            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // lblSearchTitle
             // 
@@ -367,7 +356,6 @@ namespace Hivee
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnShowAll;
         private System.Windows.Forms.Button btnMyPages;
-        private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.TextBox txtPageName;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Button btnCreate;
